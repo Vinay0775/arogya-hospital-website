@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "Appointment": {
+      "title": "Appointment",
+      "description": "A patient appointment request.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the appointment." },
+        "patientName": { "type": "string", "description": "Full name of the patient." },
+        "patientPhone": { "type": "string", "description": "Contact phone number." },
+        "patientEmail": { "type": "string", "description": "Email address." },
+        "date": { "type": "string", "format": "date-time", "description": "Preferred appointment date." },
+        "time": { "type": "string", "description": "Preferred time slot." },
+        "problem": { "type": "string", "description": "Description of the health concern." },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"], "description": "Status of the appointment." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp when the request was created." },
+        "userId": { "type": "string", "description": "UID of the user who booked (if logged in)." }
+      },
+      "required": ["patientName", "patientPhone", "date", "time", "status", "createdAt"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID." },
+        "email": { "type": "string", "description": "User email address." },
+        "displayName": { "type": "string", "description": "User display name." },
+        "role": { "type": "string", "enum": ["patient", "admin"], "description": "User role." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation timestamp." }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Collection of appointment requests."
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    }
+  }
+}
